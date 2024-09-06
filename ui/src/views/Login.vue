@@ -54,7 +54,7 @@ import router from '../router/index'
                     password: this.password
                 }).then( (res) => {
                     if(res.data.success){
-                        router.push({ name: 'dashboard' })
+                        router.push({ name: 'dashboard', params: {name:  res.data.user} })
                     }
                     else{
                         this.errors.push(res.data.message);

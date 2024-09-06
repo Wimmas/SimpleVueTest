@@ -14,9 +14,10 @@ const router = createRouter({
       component: NotFound
     },
     {
-      path: '/dashboard',
+      path: '/dashboard/:name',
       name: 'dashboard',
-      component: Dashboard
+      component: Dashboard,
+      props: true
     },
     {
       path: '/signup',

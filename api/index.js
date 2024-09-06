@@ -122,7 +122,8 @@ app.post('/auth/sign-in', async (req, res) => {
             if (result) {
               return res.status(200).json({
                 message: "Login was successful! Welcome!",
-                success: true
+                success: true,
+                user: results.rows[0]['name']
               });
             }
             else {
