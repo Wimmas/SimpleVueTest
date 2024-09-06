@@ -85,7 +85,7 @@ import { required, minLength } from '@vuelidate/validators'
                     this.errors.push("Email required.");
                 } 
                 else if(!this.validEmail(this.email)) {
-                    this.errors.push("Valid email required.");        
+                    this.errors.push("Valid email required.");
                 }
                 const result = await this.v$.$validate()
                 if(!result)
@@ -112,7 +112,7 @@ import { required, minLength } from '@vuelidate/validators'
                         router.push({ name: 'dashboard' })
                     }
                     else{
-                        alert(res.data.message);
+                        this.errors.push(res.data.message);
                     }
                 }).catch(error => {
                     console.log(error);

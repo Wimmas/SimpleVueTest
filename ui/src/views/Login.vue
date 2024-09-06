@@ -8,6 +8,12 @@
                     </div>
                     <div class="card-body">
                         <form @submit.prevent="login">
+                            <p v-if="errors.length">
+                                <b>Could not login. See errors below:</b>
+                                <ul>
+                                <li v-for="error in errors"  class="text-danger">{{ error }}</li>
+                                </ul>
+                            </p>
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Email address</label>
                                 <input type="email" class="form-control" v-model="email" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -51,7 +57,7 @@ import router from '../router/index'
                         router.push({ name: 'dashboard' })
                     }
                     else{
-                        alert(res.data.message);
+                        this.errors.push(res.data.message);
                     }
                 }).catch(error => {
                     console.log(error);
