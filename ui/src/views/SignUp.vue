@@ -109,7 +109,7 @@ import { required, minLength } from '@vuelidate/validators'
                     password: this.password
                 }).then( async (res) => {
                     if(res.data.success){
-                        router.push({ name: 'dashboard' })
+                        router.push({ name: 'dashboard', params: {name:  this.name} })
                     }
                     else{
                         this.errors.push(res.data.message);

@@ -14,7 +14,7 @@ const router = createRouter({
       component: NotFound
     },
     {
-      path: '/dashboard/:name',
+      path: '/:name',
       name: 'dashboard',
       component: Dashboard,
       props: true
