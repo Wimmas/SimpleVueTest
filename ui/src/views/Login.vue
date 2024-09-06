@@ -49,12 +49,13 @@ import router from '../router/index'
 
         methods:{
             login(){
+                this.errors = [];
                 axios.post('http://localhost:3000/auth/sign-in', {
                     email: this.email,
                     password: this.password
                 }).then( (res) => {
                     if(res.data.success){
-                        router.push({ name: 'dashboard', params: {name:  res.data.user} })
+                        router.push({ name: 'dashboard', params: {name:  res.data.user, email: this.email} })
                     }
                     else{
                         this.errors.push(res.data.message);

@@ -148,6 +148,101 @@ app.post('/auth/sign-in', async (req, res) => {
   }
 });
 
+app.post('/auth/details', async (req, res) => {
+  try {
+    let { email } = req.body;
+    
+    pool.query(
+      `SELECT * FROM users
+        WHERE email = $1`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return res.status(500).json({
+            message: "Internal Server Error",
+          });
+        }
+        console.log(results.rows);
+
+        if (results.rows.length > 0) {
+          return res.status(200).json({
+            email: results.rows[0]['email'],
+            name: results.rows[0]['name'],
+            success: true
+          });
+        } else {
+          return res.status(200).json({
+            message: "Could not find user in the DB",
+            success: false
+          });
+        }
+      }
+    );
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+app.post('/account/settings', async (req, res) => {
+  try {
+    let { name, email, oldEmail, password } = req.body;
+
+    hashedPassword = await bcrypt.hash(password, 10);
+    
+    pool.query(
+      `SELECT * FROM users
+        WHERE email = $1`,
+      [oldEmail],
+      async (err, results) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            message: "Internal Server Error",
+          });
+        }
+        console.log(results.rows);
+        
+        hashedPassword = await bcrypt.hash(password, 10);
+
+        if (results.rows.length > 0) {
+          pool.query(
+            `UPDATE users
+            SET name = $1,
+            password = $2,
+            email = $3
+            WHERE did = $4`,
+            [name, hashedPassword, email, results.rows[0]['did']],
+            (err, results) => {
+              if (err) {
+                return res.status(500).json({
+                  message: "Internal Server Error",
+                });
+              }
+              console.log(results.rows);
+              return res.status(200).json({
+                message: " You have successfully updated your account!",
+                success: true
+              });
+            }
+          );
+        } else {
+          return res.status(200).json({
+            message: "Could not update user. Please contact admin",
+            success: false
+          });
+        }
+      }
+    );
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+  
+});
+
 app.listen(PORT, async () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

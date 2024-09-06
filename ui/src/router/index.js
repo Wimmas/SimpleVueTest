@@ -4,6 +4,7 @@ import SignUp from '@/views/SignUp.vue'
 import Login from '@/views/Login.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import NotFound from '@/views/404.vue'
+import AccountSettings from '@/views/AccountSettings.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,7 +15,7 @@ const router = createRouter({
       component: NotFound
     },
     {
-      path: '/:name',
+      path: '/:name:email',
       name: 'dashboard',
       component: Dashboard,
       props: true
@@ -28,6 +29,12 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/:email:name',
+      name: 'account',
+      component: AccountSettings,
+      props: true
     },
   ]
 })

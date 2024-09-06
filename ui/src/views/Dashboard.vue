@@ -20,10 +20,7 @@
                             Dropdown
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" @click="GoToAccountSettings">Account Settings</a></li>
                         </ul>
                         </li>
                         <li class="nav-item">
@@ -55,9 +52,17 @@
 </template>
 
 <script>
+import router from '../router/index'
+
 export default {
   props: {
-    name: String
+    name: String,
+    email: String
+  },
+  methods:{
+    GoToAccountSettings(){
+        router.push({ name: 'account', params: {email: this.email} })
+    }
   }
 }
 </script>
